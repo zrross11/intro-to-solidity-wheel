@@ -1,0 +1,23 @@
+# Ignore build directories
+/build/
+
+# Ignore node_modules directory
+/node_modules/
+
+# Ignore Truffle artifacts
+/build/contracts/
+
+# Ignore local configuration files
+truffle-config.js
+
+# Ignore logs
+/logs/
+
+# Ignore environment-specific settings
+.env
+
+# Ignore package-lock.json for npm
+package-lock.json
+
+# Ignore yarn lock file
+yarn.lock
