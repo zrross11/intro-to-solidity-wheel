@@ -21,3 +21,6 @@ package-lock.json
 
 # Ignore yarn lock file
 yarn.lock
+
+# Ignore venv
+venv/

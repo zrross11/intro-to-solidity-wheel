@@ -17,28 +17,28 @@ contract DecisionWheel {
         address decisionMaker;
         uint256 timestamp;
     }
-        
-    Decision[] public decisions;
-        
+
+    uint256 public currentDecisionIndex = 0;
+    Decision[5] public decisions;
+
     event DecisionMade(string question, string answer, address decisionMaker, uint256 timestamp);
         
+    function getDecisions() public view returns (Decision[5] memory) {
+        return decisions;
+    }
+
     function makeDecision(string memory question, string[] memory answers) public {
         require(answers.length > 1, "At least two answers must be provided");
             
         uint256 randomIndex = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % answers.length;
         string memory winningAnswer = answers[randomIndex];
             
-        Decision memory newDecision = Decision(question, winningAnswer, msg.sender, block.timestamp);
+        decisions[currentDecisionIndex] = Decision(question, winningAnswer, msg.sender, block.timestamp);
             
-        if (decisions.length == 5) {
-            // Shift the elements of the array to the left, overwriting the first element and leaving the last element empty
-            for (uint i = 0; i < decisions.length - 1; i++) {
-                decisions[i] = decisions[i + 1];
-            }
-            // Set the last element to the new decision
-            decisions[decisions.length - 1] = newDecision;
+        if (currentDecisionIndex < 4) {
+            currentDecisionIndex++;
         } else {
-            decisions.push(newDecision);
+            currentDecisionIndex = 0;
         }
             
         emit DecisionMade(question, winningAnswer, msg.sender, block.timestamp);
